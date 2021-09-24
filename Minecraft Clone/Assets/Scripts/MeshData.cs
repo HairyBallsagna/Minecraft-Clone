@@ -14,7 +14,7 @@ public class MeshData
     public MeshData waterMesh;
     public bool isMainMesh = true;
 
-    public MeshData (bool isMainMesh)
+    public MeshData(bool isMainMesh)
     {
         if (isMainMesh)
         {
@@ -22,7 +22,7 @@ public class MeshData
         }
     }
 
-    public void AddVertext (Vector3 vertex, bool vertextGeneratesCollider)
+    public void AddVertex(Vector3 vertex, bool vertextGeneratesCollider)
     {
         vertices.Add(vertex);
         if (vertextGeneratesCollider) colliderVertices.Add(vertex);
