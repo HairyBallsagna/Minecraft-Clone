@@ -72,14 +72,6 @@ public class World : MonoBehaviour
             if (chunk != null) {SafeDestroy(chunk.gameObject);}
         }
 
-        if (transform.childCount > 0)
-        {
-            foreach (Transform child in transform)
-            {
-                SafeDestroy(child.gameObject);
-            }
-        }
-        
         chunks.Clear();
     }
 
