@@ -24,16 +24,20 @@ public class ChunkRenderer : MonoBehaviour
         set { ChunkData.modifiedByThePlayer = value; }
     }
 
-    private void Awake()
+    /* private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
         _meshCollider = GetComponent<MeshCollider>();
         _mesh = _meshFilter.mesh;
-    }
+    } */
 
     public void InitializeChunk(ChunkData data)
     {
         this.ChunkData = data;
+        _meshFilter = GetComponent<MeshFilter>();
+        _meshCollider = GetComponent<MeshCollider>();
+        _mesh = new Mesh();
+        _meshFilter.sharedMesh = _mesh;
     }
 
     private void RenderMesh(MeshData meshData)

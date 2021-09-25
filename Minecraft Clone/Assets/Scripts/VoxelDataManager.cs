@@ -11,7 +11,7 @@ public class VoxelDataManager : MonoBehaviour
     public static Dictionary<VoxelType, TextureData> voxelTextureDatas = new Dictionary<VoxelType, TextureData>();
     public VoxelDataSO textureData;
 
-    private void Awake()
+    public void Initialize()
     {
         foreach (TextureData item in textureData.textureDataList)
         {

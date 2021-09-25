@@ -10,11 +10,9 @@ public class WorldEditor : Editor
     {
         World world = (World) target;
 
-        base.DrawDefaultInspector();
-        
-        if (world.autoUpdate)
+        if (DrawDefaultInspector())
         {
-            if (DrawDefaultInspector())
+            if (world.autoUpdate)
             {
                 world.GenerateWorld();
             }
@@ -23,6 +21,11 @@ public class WorldEditor : Editor
         if (GUILayout.Button("Generate"))
         {
             world.GenerateWorld();
+        }
+
+        if (GUILayout.Button("Destroy Chunks"))
+        {
+            world.DestroyChunks();
         }
     }
 }
