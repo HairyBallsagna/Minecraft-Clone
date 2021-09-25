@@ -8,42 +8,20 @@ public class World : MonoBehaviour
     public int mapSizeInChunks = 6;
     public int chunkSize = 16;
     public int chunkHeight = 100;
-    [Range(0, 100)]
-    public int waterThreshold = 50;
-    [Range(0, 1)]
-    public float noiseScale = 0.03f;
-
+    public Vector2Int offset;
+    
     public GameObject chunkPrefab;
+    public TerrainGenerator terrainGenerator;
 
     public bool autoUpdate = false;
+
     
     private Dictionary<Vector3Int, ChunkData> chunkDatas = new Dictionary<Vector3Int, ChunkData>();
     private Dictionary<Vector3Int, ChunkRenderer> chunks = new Dictionary<Vector3Int, ChunkRenderer>();
 
     private void GenerateVoxels(ChunkData data)
     {
-        for (int x = 0; x < chunkSize; x++)
-        {
-            for (int z = 0; z < chunkSize; z++)
-            {
-                float noiseValue = Mathf.PerlinNoise
-                    ((data.worldPos.x + x) * (noiseScale / 10), (data.worldPos.z + z) * (noiseScale / 10));
-                int groundPos = Mathf.RoundToInt(noiseValue * chunkHeight);
-    
-                for (int y = 0; y < chunkHeight; y++)
-                {
-                    VoxelType type = VoxelType.Dirt;
-                    if (y > groundPos)
-                    {
-                        if (y < waterThreshold) type = VoxelType.Water;
-                        else type = VoxelType.Air;
-                    } 
-                    else if (y == groundPos) type = VoxelType.Grass_Dirt;
-                    
-                    Chunk.SetVoxel(data, new Vector3Int(x, y, z), type);
-                }
-            }
-        }
+        
     }
     
     public void GenerateWorld()
@@ -68,8 +46,9 @@ public class World : MonoBehaviour
             for (int z = 0; z < mapSizeInChunks; z++)
             {
                 ChunkData data = new ChunkData(chunkSize, chunkHeight, this, new Vector3Int(x * chunkSize, 0, z * chunkSize));
-                GenerateVoxels(data);
-                chunkDatas.Add(data.worldPos, data);
+                //GenerateVoxels(data);
+                ChunkData newData = terrainGenerator.GenerateChunkData(data, offset);
+                chunkDatas.Add(newData.worldPos, newData);
             }
         }
 
