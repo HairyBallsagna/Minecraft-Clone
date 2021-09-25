@@ -40,7 +40,7 @@ public static class Noise
         return outputMin + (value - 0) * (outputMax - outputMin) / (1 - 0);
     }
     
-    public static float RemapValue01Int(float value, float outputMin, float outputMax)
+    public static int RemapValue01Int(float value, float outputMin, float outputMax)
     {
         return (int) RemapValue01(value, outputMin, outputMax);
     }

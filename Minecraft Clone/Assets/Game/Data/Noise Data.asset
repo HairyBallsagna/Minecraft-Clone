@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Noise Data
   m_EditorClassIdentifier: 
   noiseScale: 0.01
-  octaves: 5
-  offset: {x: -100, y: 3400}
-  worldOffset: {x: 0, y: 0}
-  persistance: 0.5
+  octaves: 4
+  offset: {x: -777, y: 3400}
+  worldOffset: {x: 4, y: 0}
+  persistance: 0.45
   redistributionModifier: 1.2
-  exponent: 5
+  exponent: 7.4

@@ -15,6 +15,10 @@ public class World : MonoBehaviour
 
     public bool autoUpdate = false;
 
+    [HideInInspector]
+    public bool biomeSettingsFoldout;
+    [HideInInspector]
+    public bool noiseSettingsFoldout;
     
     private Dictionary<Vector3Int, ChunkData> chunkDatas = new Dictionary<Vector3Int, ChunkData>();
     private Dictionary<Vector3Int, ChunkRenderer> chunks = new Dictionary<Vector3Int, ChunkRenderer>();
@@ -67,11 +71,13 @@ public class World : MonoBehaviour
     
     public void DestroyChunks()
     {
+        foreach (Transform child in transform) SafeDestroy(child.gameObject);
+
         foreach (ChunkRenderer chunk in chunks.Values)
         {
             if (chunk != null) {SafeDestroy(chunk.gameObject);}
         }
-
+        
         chunks.Clear();
     }
 
