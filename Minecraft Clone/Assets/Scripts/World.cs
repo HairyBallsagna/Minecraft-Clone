@@ -12,6 +12,7 @@ public class World : MonoBehaviour
     public int waterThreshold = 50;
     [Range(0, 1)]
     public float noiseScale = 0.03f;
+
     public GameObject chunkPrefab;
 
     public bool autoUpdate = false;
@@ -25,9 +26,10 @@ public class World : MonoBehaviour
         {
             for (int z = 0; z < chunkSize; z++)
             {
-                float noiseValue = Mathf.PerlinNoise((data.worldPos.x + x) * (noiseScale / 10), (data.worldPos.z + z) * (noiseScale / 10));
+                float noiseValue = Mathf.PerlinNoise
+                    ((data.worldPos.x + x) * (noiseScale / 10), (data.worldPos.z + z) * (noiseScale / 10));
                 int groundPos = Mathf.RoundToInt(noiseValue * chunkHeight);
-
+    
                 for (int y = 0; y < chunkHeight; y++)
                 {
                     VoxelType type = VoxelType.Dirt;
@@ -43,7 +45,7 @@ public class World : MonoBehaviour
             }
         }
     }
-
+    
     public void GenerateWorld()
     {
         FindObjectOfType<VoxelDataManager>().Initialize();
