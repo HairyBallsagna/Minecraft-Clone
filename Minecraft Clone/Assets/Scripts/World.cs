@@ -11,6 +11,8 @@ public class World : MonoBehaviour
     public int waterThreshold = 50;
     public float noiseScale = 0.03f;
     public GameObject chunkPrefab;
+
+    public bool autoUpdate = false;
     
     private Dictionary<Vector3Int, ChunkData> chunkDatas = new Dictionary<Vector3Int, ChunkData>();
     private Dictionary<Vector3Int, ChunkRenderer> chunks = new Dictionary<Vector3Int, ChunkRenderer>();
