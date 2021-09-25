@@ -109,7 +109,7 @@ public static class VoxelHelper
         foreach (Direction dir in directions)
         {
             Vector3Int neighbourVoxelCoords = new Vector3Int(x, y, z) + dir.GetVector();
-            VoxelType neighbourVoxelType = Chunk.GetBlockFromChunkCoordinates(chunk, neighbourVoxelCoords);
+            VoxelType neighbourVoxelType = Chunk.GetVoxelFromChunkCoords(chunk, neighbourVoxelCoords);
 
             if (neighbourVoxelType != VoxelType.Nothing && !VoxelDataManager.voxelTextureDatas[neighbourVoxelType].isSolid)
             {

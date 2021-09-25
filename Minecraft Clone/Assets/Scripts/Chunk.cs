@@ -9,12 +9,13 @@ public static class Chunk
     {
         MeshData meshData = new MeshData(true);
         
-        // TODO fill later
+        LoopThroughVoxels(chunkData, (x, y, z) => meshData = VoxelHelper.GetMeshData(chunkData, x, y, z, meshData, 
+            chunkData.voxels[GetIndexFromPosition(chunkData, x, y, z)]));
         
         return meshData;
     }
 
-    public static void LoopThroughTheVoxels(ChunkData chunkData, Action<int, int, int> actionToPerform)
+    public static void LoopThroughVoxels(ChunkData chunkData, Action<int, int, int> actionToPerform)
     {
         for (int i = 0; i < chunkData.voxels.Length; i++)
         {
@@ -23,23 +24,24 @@ public static class Chunk
         }
     }
 
-    public static VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
+    public static VoxelType GetVoxelFromChunkCoords(ChunkData chunkData, int x, int y, int z)
     {
         if (InRange(chunkData, x) && InRangeHeight(chunkData, y) && InRange(chunkData, z))
         {
             int index = GetIndexFromPosition(chunkData, x, y, z);
             return chunkData.voxels[index];
         }
-        
-        throw new Exception("need to ask world for appropriate chunk");
+
+        return chunkData.worldRef.GetVoxelFromChunkCoords(chunkData, chunkData.worldPos.x + x, chunkData.worldPos.y + y,
+            chunkData.worldPos.z + z);
     }
 
-    public static VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, Vector3Int chunkCoords)
+    public static VoxelType GetVoxelFromChunkCoords(ChunkData chunkData, Vector3Int chunkCoords)
     {
-        return GetBlockFromChunkCoordinates(chunkData, chunkCoords.x, chunkCoords.y, chunkCoords.z);
+        return GetVoxelFromChunkCoords(chunkData, chunkCoords.x, chunkCoords.y, chunkCoords.z);
     }
 
-    public static void SetBlock(ChunkData chunkData, Vector3Int localPos, VoxelType voxel)
+    public static void SetVoxel(ChunkData chunkData, Vector3Int localPos, VoxelType voxel)
     {
         if (InRange(chunkData, localPos.x) && InRangeHeight(chunkData, localPos.y) && InRange(chunkData, localPos.z))
         {
@@ -49,7 +51,7 @@ public static class Chunk
         else throw new Exception("need to ask world for apporpriate chunk mf");
     }
 
-    public static Vector3Int GetBlockInChunkCoordinates(ChunkData chunkData, Vector3Int pos)
+    public static Vector3Int GetVoxelInChunkCoords(ChunkData chunkData, Vector3Int pos)
     {
         return new Vector3Int
         {
@@ -82,5 +84,17 @@ public static class Chunk
     {
         if (yCoord < 0 || yCoord >= chunkData.chunkHeight) return false;
         else return true;
+    }
+
+    public static Vector3Int ChunkPositionFromVoxelCoords(World world, int x, int y, int z)
+    {
+        Vector3Int pos = new Vector3Int
+        {
+            x = Mathf.FloorToInt(x / (float) world.chunkSize) * world.chunkSize,
+            y = Mathf.FloorToInt(y / (float) world.chunkHeight) * world.chunkSize,
+            z = Mathf.FloorToInt(z / (float) world.chunkSize) * world.chunkSize,
+        };
+
+        return pos;
     }
 }
