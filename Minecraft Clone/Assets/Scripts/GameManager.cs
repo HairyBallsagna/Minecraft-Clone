@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public World world;
 
     public float detectionInterval = 1f;
-    public CinemachineVirtualCamera camera;
+    public CinemachineVirtualCamera cam;
 
     private Vector3Int currentChunkCenter = Vector3Int.zero;
     private GameObject player;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         if (Physics.Raycast(raycastStartPosition, Vector3.down, out hit, 120))
         {
             player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
-            camera.Follow = player.transform.GetChild(2);
+            cam.Follow = player.transform.GetChild(2);
             StartCheckingTheMap();
         }
     }

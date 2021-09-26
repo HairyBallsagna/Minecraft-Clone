@@ -34,23 +34,17 @@ public class PlayerMovement : MonoBehaviour
 		{
 			_isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, ground);
 
-			// gettin the x and z input 
 			float horizontal = Input.GetAxisRaw("Horizontal");
 			float vertical = Input.GetAxisRaw("Vertical");
-
-			// setting the _input Vector 2 to the horizontal and vertical values
 			_input = new Vector2(horizontal, vertical);
 
 			currentSpeed = SetSpeedAndState(currentSpeed);
-			
 			_dir = transform.right * horizontal + transform.forward * vertical;
 
 			controller.Move(_dir * currentSpeed * Time.deltaTime);
 
 			if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
-			{
 				_velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-			}
 
 			controller.Move(_velocity * Time.deltaTime);
 		}

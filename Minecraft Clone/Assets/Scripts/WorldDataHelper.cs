@@ -13,4 +13,19 @@ public static class WorldDataHelper
             z = Mathf.FloorToInt(pos.z / (float) world.chunkSize) * world.chunkSize
         };
     }
+
+    public static List<Vector3Int> SelectPositionsToCreate(World.WorldData worldData, List<Vector3Int> allChunkPositionsNeeded, Vector3Int playerPos)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public static List<Vector3Int> SelectDataPositionsToCreate(World.WorldData worldData, List<Vector3Int> allChunkDataPositionsNeeded, Vector3Int playerPos)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public static List<Vector3Int> GetChunkPositionsAroundPlayer(World world, Vector3Int playerPos)
+    {
+        throw new System.NotImplementedException();
+    }
 }
