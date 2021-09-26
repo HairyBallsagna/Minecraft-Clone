@@ -23,8 +23,11 @@ public class BiomeGenerator : MonoBehaviour
                 if (y < waterThreshold) type = VoxelType.Water;
                 else type = VoxelType.Air;
             } 
-            else if (y == groundPos) type = VoxelType.Grass_Dirt;
-                    
+            else if (y == groundPos && y < waterThreshold)
+                type = VoxelType.Sand;
+            else if (y == groundPos)
+                type = VoxelType.Grass_Dirt;
+            
             Chunk.SetVoxel(data, new Vector3Int(x, y, z), type);
         }
 

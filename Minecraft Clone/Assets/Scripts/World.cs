@@ -23,11 +23,6 @@ public class World : MonoBehaviour
     private Dictionary<Vector3Int, ChunkData> chunkDatas = new Dictionary<Vector3Int, ChunkData>();
     private Dictionary<Vector3Int, ChunkRenderer> chunks = new Dictionary<Vector3Int, ChunkRenderer>();
 
-    private void GenerateVoxels(ChunkData data)
-    {
-        
-    }
-    
     public void GenerateWorld()
     {
         FindObjectOfType<VoxelDataManager>().Initialize();
