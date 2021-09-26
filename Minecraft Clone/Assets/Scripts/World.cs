@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class World : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class World : MonoBehaviour
     public TerrainGenerator terrainGenerator;
 
     public bool autoUpdate = false;
+
+    public UnityEvent OnWorldCreated;
+    public UnityEvent OnNewChunksGenerated;
 
     [HideInInspector]
     public bool biomeSettingsFoldout;
@@ -62,6 +66,7 @@ public class World : MonoBehaviour
             chunkRenderer.InitializeChunk(data);
             chunkRenderer.UpdateChunk(meshData);
         }
+        OnWorldCreated?.Invoke();
     }
     
     public void DestroyChunks()
@@ -88,7 +93,13 @@ public class World : MonoBehaviour
         Vector3Int voxelInChunkCoords = Chunk.GetVoxelInChunkCoords(containerChunk, new Vector3Int(x, y, z));
         return Chunk.GetVoxelFromChunkCoords(containerChunk, voxelInChunkCoords);
     }
-    
+
+    public void LoadAdditionalChunksRequest(GameObject player)
+    {
+        Debug.Log("load more chunks asshole");
+        OnNewChunksGenerated?.Invoke();
+    }
+
     public static T SafeDestroy<T>(T obj) where T : Object
     {
         if (Application.isEditor)
@@ -98,11 +109,11 @@ public class World : MonoBehaviour
      
         return null;
     }
+
     public static T SafeDestroyGameObject<T>(T component) where T : Component
     {
         if (component != null)
             SafeDestroy(component.gameObject);
         return null;
     }
-
 }
