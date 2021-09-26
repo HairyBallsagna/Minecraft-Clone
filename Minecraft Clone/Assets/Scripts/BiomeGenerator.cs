@@ -10,7 +10,8 @@ public class BiomeGenerator : MonoBehaviour
 
     public NoiseData biomeNoiseData;
 
-    public VoxelLayerHandler startLayerHandler;
+    public VoxelLayerHandler startLayer;
+    public List<VoxelLayerHandler> additionalLayers;
     
     public ChunkData ProcessChunkColumn(ChunkData data, int x, int z, Vector2Int offset)
     {
@@ -19,21 +20,13 @@ public class BiomeGenerator : MonoBehaviour
     
         for (int y = 0; y < data.chunkHeight; y++)
         {
-            startLayerHandler.Handle(data, x, y, z, surfacePos, offset);
-            // VoxelType type = VoxelType.Dirt;
-            // if (y > surfacePos)
-            // {
-            //     if (y < waterThreshold) type = VoxelType.Water;
-            //     else type = VoxelType.Air;
-            // } 
-            // else if (y == surfacePos && y < waterThreshold)
-            //     type = VoxelType.Sand;
-            // else if (y == surfacePos)
-            //     type = VoxelType.Grass_Dirt;
-            //
-            // Chunk.SetVoxel(data, new Vector3Int(x, y, z), type);
+            startLayer.Handle(data, x, y, z, surfacePos, offset);
         }
 
+        foreach (var layer in additionalLayers)
+        {
+            layer.Handle(data, x, data.worldPos.y, z, surfacePos, offset);
+        }
         return data;
     }
 
