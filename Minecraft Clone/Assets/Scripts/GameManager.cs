@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
         if (Physics.Raycast(raycastStartPosition, Vector3.down, out hit, 120))
         {
             player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
-            cam.Follow = player.transform.GetChild(2);
             StartCheckingTheMap();
+            cam.Follow = player.transform.GetChild(2);
         }
     }
 
