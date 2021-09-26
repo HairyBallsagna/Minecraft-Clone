@@ -10,6 +10,10 @@ public class BiomeGenerator : MonoBehaviour
 
     public NoiseData biomeNoiseData;
 
+    public DomainWarping domainWarping;
+
+    public bool useDomainWarping = false;
+
     public VoxelLayerHandler startLayer;
     public List<VoxelLayerHandler> additionalLayers;
     
@@ -32,7 +36,13 @@ public class BiomeGenerator : MonoBehaviour
 
     private int GetSurfaceHeightNoise(int x, int z, int chunkHeight)
     {
-        float terrainHeight = Noise.OctavePerlin(x, z, biomeNoiseData);
+        float terrainHeight;
+        
+        if (useDomainWarping)
+            terrainHeight = domainWarping.GenerateDomainNoise(x, z, biomeNoiseData);
+        else 
+            terrainHeight = Noise.OctavePerlin(x, z, biomeNoiseData);
+        
         terrainHeight = Noise.Redistribution(terrainHeight, biomeNoiseData);
         int surfaceHeight = Noise.RemapValue01Int(terrainHeight, 0, chunkHeight);
         return surfaceHeight;
