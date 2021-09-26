@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AirLayerHandler : MonoBehaviour
+public class AirLayerHandler : VoxelLayerHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override bool TryHandling(ChunkData data, int x, int y, int z, int surfaceHeightNoise, Vector2Int offset)
     {
-        
-    }
+        if (y > surfaceHeightNoise)
+        {
+            Vector3Int pos = new Vector3Int(x, y, z);
+            Chunk.SetVoxel(data, pos, VoxelType.Air);
+            return true;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return false;
     }
 }

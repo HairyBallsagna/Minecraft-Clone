@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterLayerHandler : MonoBehaviour
+public class WaterLayerHandler : VoxelLayerHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public int waterLevel = 1;
+    
+    protected override bool TryHandling(ChunkData data, int x, int y, int z, int surfaceHeightNoise, Vector2Int offset)
     {
-        
-    }
+        if (y > surfaceHeightNoise && y <= waterLevel)
+        {
+            Vector3Int pos = new Vector3Int(x, y, z);
+            Chunk.SetVoxel(data, pos, VoxelType.Water);
+            if (y == surfaceHeightNoise + 1)
+            {
+                pos.y = surfaceHeightNoise + 1;
+                Chunk.SetVoxel(data, pos, VoxelType.Sand);
+            }
+            return true;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return false;
     }
 }

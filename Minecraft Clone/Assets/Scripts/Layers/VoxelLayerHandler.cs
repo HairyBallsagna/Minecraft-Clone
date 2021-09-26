@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BlockLayerHandler : MonoBehaviour
+public abstract class VoxelLayerHandler : MonoBehaviour
 {
-   [SerializeField] private BlockLayerHandler Next;
+   [SerializeField] private VoxelLayerHandler Next;
 
    public bool Handle(ChunkData data, int x, int y, int z, int surfaceHeightNoise, Vector2Int offset)
    {
