@@ -28,9 +28,11 @@ public class PlayerMovement : MonoBehaviour
         private bool _isGrounded;
         private bool _canLook;
 
+        private float currentSpeed = 0f;
+
         private void Update()
 		{
-			float currentSpeed = 0f;
+			_isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, ground);
 
 			// gettin the x and z input 
 			float horizontal = Input.GetAxisRaw("Horizontal");
@@ -85,8 +87,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 _velocity.y = -2f;
             }
-
-            _isGrounded = Physics.Raycast(groundCheck.position, -groundCheck.transform.up, groundDistance, ground);
             _velocity.y += gravity * Time.deltaTime;
         }
 }
